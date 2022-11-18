@@ -1,21 +1,49 @@
 $stunnel_root = "C:\Program Files (x86)\stunnel"
 $core_config_path = "C:\Users\ContainerAdministrator\stunnel\stunnel.conf"
 
-echo "Writing environment configuration..."
+function LogNotice($info, $level="5") {
+    $date = Get-Date -uformat "%Y.%m.%d %H:%M:%S"
+    echo "$date LOG$level[]: $info"
+}
+
+LogNotice "Writing environment configuration..."
 ${env:STUNNEL_CONF} | Out-File -Append -Encoding ascii $core_config_path
 
-echo "Starting stunnel..."
+LogNotice "Starting stunnel..."
 copy $core_config_path $stunnel_root\config\stunnel.conf
 & "$stunnel_Root\bin\stunnel.exe"
 
 # Wait for Stunnel to start
 sleep 5
 
-ps stunnel
-if (-not $?)
+if (-not (ps stunnel))
 {
-    Write-Error "Unable to start stunnel"
+    LogNotice -Level "2" -Info "Unable to start stunnel"
     Exit 1
 }
 
-Get-Content -Wait stunnel.log
+function LogExists() {
+    return (Test-Path -Path stunnel.log -PathType Leaf)
+}
+
+# Wait for the log to appear
+$retries = 10
+while (($retries -gt 0) -and -not (LogExists))
+{
+    LogNotice -Level "6" -Info "Waiting for stunnel.log: $retries retries remaining..."
+    $retries = $retries - 1
+    sleep 5
+}
+
+if (-not (LogExists))
+{
+    LogNotice -Level "2" -Info "Unable to find stunnel.log; perhaps the configuration is invalid?"
+    Exit 1
+}
+
+while ($true)
+{
+    Get-Content -Tail 10 -Wait stunnel.log
+    # Wait 1s before reconnecting to the log
+    sleep 1
+}

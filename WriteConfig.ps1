@@ -11,10 +11,10 @@ ${env:STUNNEL_CONF} | Out-File -Append -Encoding ascii $core_config_path
 
 LogNotice "Starting stunnel..."
 copy $core_config_path $stunnel_root\config\stunnel.conf
-& "$stunnel_Root\bin\stunnel.exe"
 
-# Wait for Stunnel to start
-sleep 5
+& "$stunnel_Root\bin\stunnel.exe" -install
+Set-Service stunnel -StartupType Automatic
+Start-Service stunnel
 
 if (-not (ps stunnel))
 {

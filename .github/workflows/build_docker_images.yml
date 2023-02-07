@@ -9,7 +9,7 @@ jobs:
   build2019:
     strategy:
       matrix:
-        stunnel_version: [5.67]
+        stunnel_version: [5.69]
         windows_version: [1809]
     runs-on: windows-2019
     steps:

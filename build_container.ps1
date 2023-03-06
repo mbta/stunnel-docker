@@ -7,6 +7,9 @@ param(
     [Parameter(Mandatory)]
     [string]$StunnelVersion,
 
+    [Parameter(Mandatory)]
+    [string]$StunnelSha256,
+
     [switch]$Force=$false
 )
 $stunnelimage="${ImageNameRoot}stunnel"
@@ -19,6 +22,7 @@ if (-not $Force -and $?) {
   docker build . `
     --build-arg BUILD_IMAGE="mcr.microsoft.com/windows/servercore:${WindowsVersion}" `
     --build-arg STUNNEL_VERSION=$StunnelVersion `
+    --build-arg STUNNEL_SHA256=$StunnelSha256 `
     --tag "${stunnelimage}:${stunneltag}"
 
   docker push "${stunnelimage}:${stunneltag}"

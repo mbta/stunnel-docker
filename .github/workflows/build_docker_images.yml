@@ -9,8 +9,10 @@ jobs:
   build2019:
     strategy:
       matrix:
-        stunnel_version: [5.69]
-        windows_version: [1809]
+        include:
+          - stunnel_version: 5.69
+            stunnel_sha256: 66c4f3bbb94c4a274f2e8e98e3d44e74c0460d6494986f0a94b9b8becdc63cc3
+            windows_version: 1809
     runs-on: windows-2019
     steps:
       - name: Login to Docker Hub
@@ -25,4 +27,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Build tag (if needed)
-        run: ./build_container.ps1 -ImageNameRoot ${{ secrets.DOCKER_USERNAME }}/windows- -WindowsVersion ${{ matrix.windows_version }} -StunnelVersion ${{ matrix.stunnel_version }} ${{ steps.force.outputs.force }}
+        run: ./build_container.ps1 -ImageNameRoot ${{ secrets.DOCKER_USERNAME }}/windows- -WindowsVersion ${{ matrix.windows_version }} -StunnelVersion ${{ matrix.stunnel_version }} -StunnelSha256 ${{ matrix.stunnel_sha256 }} ${{ steps.force.outputs.force }}

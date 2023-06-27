@@ -1,4 +1,4 @@
-name: Build Docker images
+name: Build Windows images
 
 on:
   workflow_dispatch:
@@ -30,6 +30,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Build Docker Hub tag (if needed)
+        working-directory: windows
         run: ./build_container.ps1 -ImageNameRoot ${{ secrets.DOCKER_USERNAME }}/windows- -WindowsVersion ${{ matrix.windows_version }} -StunnelVersion ${{ matrix.stunnel_version }} -StunnelSha256 ${{ matrix.stunnel_sha256 }} ${{ steps.force.outputs.force }}
       - name: Log in to GHCR
         uses: docker/login-action@v2
@@ -38,4 +39,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build GHCR tag (if needed)
+        working-directory: windows
         run: ./build_container.ps1 -ImageNameRoot ghcr.io/${{ github.repository_owner }}/windows- -WindowsVersion ${{ matrix.windows_version }} -StunnelVersion ${{ matrix.stunnel_version }} -StunnelSha256 ${{ matrix.stunnel_sha256 }} ${{ steps.force.outputs.force }}

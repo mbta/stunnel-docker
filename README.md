@@ -30,4 +30,4 @@ docker run -p <container port>:<local port> -e "STUNNEL_CONF=<configuration>" st
 
 ## New Versions (Alpine Linux)
 
-If a [new version of Stunnel](https://www.stunnel.org/NEWS.html) or [new version of Alpine Linux](https://alpinelinux.org/releases/) is released, update [.github/workflows/build_alpine_images.yml](https://github.com/mbta/stunnel-docker/blob/main/.github/workflows/build_alpine_images.yml) to include the new versions in the build matrix.
+If a [new version of Stunnel](https://www.stunnel.org/NEWS.html) ([Alpine package](https://pkgs.alpinelinux.org/package/edge/community/x86_64/stunnel)) or [new version of Alpine Linux](https://alpinelinux.org/releases/) is released, update [.github/workflows/build_alpine_images.yml](https://github.com/mbta/stunnel-docker/blob/main/.github/workflows/build_alpine_images.yml) to include the new versions in the build matrix.

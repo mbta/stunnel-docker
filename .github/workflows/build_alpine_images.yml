@@ -13,8 +13,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - stunnel_version: 5.72-r0
-            alpine_version: 3.19.1
+          - stunnel_version: 5.73-r0
+            alpine_version: 3.21.0
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -10,8 +10,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - stunnel_version: '5.72'
-            stunnel_sha256: 1037c53f8ab590c2f3001e54cf381c3ea4225e9670b03870191383060e6851e7
+          - stunnel_version: '5.73'
+            stunnel_sha256: d686b1a4135947718e7a8157a8cb6694ed50e2267713de1972941148a8859789
             windows_version: 1809
     runs-on: windows-2019
     permissions:

@@ -40,7 +40,7 @@ jobs:
           ALPINE_VERSION: ${{ matrix.alpine_version }}
         run: bash build_container.sh
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1
         with:
           image-ref: ghcr.io/${{ github.repository_owner }}/stunnel:${{ matrix.stunnel_version }}-alpine-${{ matrix.alpine_version }}
           format: 'table'

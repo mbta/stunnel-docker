@@ -1,6 +1,6 @@
 ARG BUILD_IMAGE=alpine:3
 
-FROM $BUILD_IMAGE as build
+FROM $BUILD_IMAGE AS build
 ARG STUNNEL_VERSION
 
 RUN apk add --no-cache "stunnel=${STUNNEL_VERSION}" && \
